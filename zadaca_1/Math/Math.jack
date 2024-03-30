@@ -1,0 +1,213 @@
+/**
+ * A basic math library.
+ */
+class Math
+{
+    static Array twoToThe;
+
+    /** Initializes the library. */
+    function void init()
+    {
+        var int i, pow;
+
+        let twoToThe = Array.new(16);
+        let pow = 1;
+        while (i<16){
+            let twoToThe[i] = pow;
+            let pow = pow + pow; //ne moze pow*2 jer multiply jos nije impelmentiran
+            let i = i+1;
+        }
+
+        return;
+    }
+
+    /** Returns the absolute value of x. */
+    function int abs(int x)
+    {
+        if(x<0){
+            return -x;
+        }else{
+            return x;
+        }
+    }
+
+    /** Returns the product of x and y. */
+    function int multiply(int x, int y)
+    {
+        var int i, sum, shiftedX;
+        let shiftedX = x;
+
+        while(i<16){
+            //if ith bit of y == 1
+            if(y & twoToThe[i]){
+                let sum = sum + shiftedX;
+            }
+            let shiftedX = shiftedX + shiftedX;
+            let i = i+1;
+        }
+        return sum;
+    }
+
+    /** Returns the integer part of x/y. */
+    function int divide(int x, int y)  // -------zadaća
+    {
+        var int q,h,x_,y_;
+        var bool b1,b2,b;
+
+        if(Math.abs(y) > Math.abs(x)){
+            return 0;
+        }
+
+        if(x<0){
+            let x_ = -x;
+            let b1 = true;
+        }else{
+            let x_ = x;
+        }
+
+        if(y<0){
+            if(b1){
+                let b = true;
+            }else{
+                let b2 = true;
+            }
+            let y_ = -y;
+        }else{
+            let y_ = y;
+        }
+
+        let q = Math.divide(x_, y_+y_);
+        let h = q+q;
+
+        if((x_ - (Math.multiply(h,y_)))< y_){
+            if(b){
+                return q+q;
+            }
+
+            if(b1|b2){
+                return -(q+q);
+            }else{
+                return q+q;
+            }
+            
+        }else{
+            if(b){
+                return q+q+1;
+            }
+
+            if(b1|b2){
+                return -(q+q+1);
+            }else{
+                return q+q+1;
+            }
+            
+        }
+    }
+
+    /** Returns the integer part of the square root of x. */
+    function int sqrt(int x)
+    {
+        var int j,y,pow;
+
+        if(x<0){
+            return 0;
+        }
+
+        let j = 7;
+        while(j>-1){ //y>=0
+            let pow = Math.multiply(y + twoToThe[j], y+twoToThe[j]);
+            if(pow<x){
+                let y = y+twoToThe[j];
+            }
+            let j = j-1;
+        }
+        return y;
+    }
+
+    /** Returns the greater number. */
+    function int max(int a, int b)
+    {
+        if(a>b){
+            return a;
+        }else{
+            return b;
+        }
+    }
+
+    /** Returns the smaller number. */
+    function int min(int a, int b)
+    {
+        if(a<b){
+            return a;
+        }else{
+            return b;
+        }
+    }
+
+    //Funkcija log koja vraca cjelobrojni dio
+    //logaritma po bazi dva od zadanog broja.
+    function int log(int x){
+        var int y;
+        var string out;
+
+        if(x<0){
+            //do Output.printString("NaN");
+            do Sys.error(-0);
+            return null;
+        }
+
+        if(x=0){
+            do Sys.error(0);
+            //do Output.printString("-infinity");
+            return null;
+        }
+
+        if(x=1){
+            return 0;
+        }
+
+        if(x=2){
+            return 1;
+        }
+
+        while(x>1){
+            let x = Math.divide(x,2);
+            //do Output.printString("x= ");
+            //do Output.printInt(x);
+            //do Output.println();
+            let y = y + 1;
+            //do Output.printString("y= ");
+            //do Output.printInt(y);
+            //do Output.println();
+            //do Output.println();
+        }
+        return y;
+    }
+
+    //Funkcija pow koja prima (dva) cijeli broj a i nenegativan
+    //cijeli broj b te vraca potenciju 'a na b' koristeci se
+    //algoritmom brzog potenciranja.
+    function int pow(int a, int b){
+
+        var int out;
+
+        if(b<0){
+            do Sys.error(0);
+            return null;
+        }
+
+        if(b=0){
+            return 1;
+        }
+
+        if(b=1){
+            return a;
+        }
+
+        //let out = Math.pow(Math.multiply(a,a), Math.multiply(b-1,a));
+        let out = Math.multiply(Math.pow(a,b-1), a);
+
+        return out;
+    }
+
+}

@@ -1,0 +1,107 @@
+/**
+ * Memory operations library.
+ */ 
+class Memory
+{
+    static Array ram;
+    static Array freeList; //pokazivac na prvi slobodan (heap)
+
+    /** Initializes memory parameters. */
+    function void init()
+    {
+        let ram = 0; //ram je Array koji zapocinje na nultom mjestu u memoriji
+
+        //inital values
+        let freeList = 2048;
+        let freeList[0] = 0; //46
+        let freeList[1] = 14335; //16384-2048-1
+
+        return;
+    }
+
+    /** Returns the value of the main memory at the given address. */
+    function int peek(int address)
+    {
+        return ram[address];
+    }
+
+    /** Sets the value of the main memory at this address
+     *  to the given value. */
+    function void poke(int address, int value)
+    {
+        let ram[address] = value;
+        return;
+    }
+
+    /** finds and allocates from the heap a memory block of the 
+     *  specified size and returns a reference to its base address. */
+    function int alloc(int size) //za alocirat nest od n mjesta nam treba n+1 zapravo
+    {
+        var int curr, next, len;
+        let curr = freeList;
+        //while curr != 0
+        while(~(curr=0)){
+            let next = ram[curr];
+            let len = ram[curr+1];
+
+            //je li blok dovoljno velik
+            //if len >= size+1
+            if (~(len < size+1)){
+                let ram[curr+1] = len - size-1;
+                let curr = curr + len + 1 - size;
+                let ram[curr] = size;
+                return curr+1;
+            }
+            let curr = next;
+        }
+
+        return 0;
+    }
+
+    /** De-allocates the given object and frees its space. */
+    function void deAlloc(int object)
+    {
+        var Array o;
+        var int size;
+        let o = object;
+
+        let size = ram[o-1];
+        let ram[o-1]= freeList;
+        let ram[0] = size -1;
+
+        let freeList = o-1;
+
+        return;
+    }    
+
+    /* Funkcija prima tri cijela broja; izvor, odrediste
+    i duljinu d te kopira prvih d vrijednosti
+    unutar memorije nakon izvora u prvih d vrijednosti 
+    nakon odredista. */
+    function void memcpy(int src, int dest, int size) {
+        var int destAddress;
+        var int srcAddress;
+        var int i;
+        
+        let destAddress = dest;
+        let srcAddress = src;
+
+        while (size > 8 | size = 8) {
+            let ram[destAddress] = ram[srcAddress];
+            let destAddress = destAddress + 1;
+            let srcAddress = srcAddress + 1;
+            let size = size - 8;
+        }
+
+        while (size > 0) {
+            let ram[destAddress] = ram[srcAddress];
+            let destAddress = destAddress + 1;
+            let srcAddress = srcAddress + 1;
+            let size = size - 1;
+        }
+
+        return;
+    }
+
+    
+}

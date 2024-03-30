@@ -1,0 +1,80 @@
+class Main
+{
+    function void main()
+    {
+        var Array A, B;
+        
+        do Memory.poke(8000, 333);
+        do Output.printInt(Memory.peek(8000));
+        
+        do Output.println();
+        
+        do Output.printString("Array A:");
+        let A = Array.new(5);
+        let A[0] = 10;
+        let A[1] = 14;
+        let A[2] = 13;
+        let A[3] = 12;
+        let A[4] = 11;
+        
+        do Output.println();
+        do Output.printInt(A[0]);
+        do Output.println();
+        do Output.printInt(A[1]);
+        do Output.println();
+        do Output.printInt(A[2]);
+        do Output.println();
+        do Output.printInt(A[3]);
+        do Output.println();
+        do Output.printInt(A[4]);
+        do Output.println();
+        
+        do Output.println();
+        
+        do Output.printString("Array B:");
+        let B = Array.new(4);
+        let B[0] = 1;
+        let B[1] = 2;
+        let B[2] = 3;
+        let B[3] = 4;
+        
+        do Output.println();
+        do Output.printInt(B[0]);
+        do Output.println();
+        do Output.printInt(B[1]);
+        do Output.println();
+        do Output.printInt(B[2]);
+        do Output.println();
+        do Output.printInt(B[3]);
+        do Output.println();
+        
+
+        /* Funkcija memcpy() prima tri cijela broja;
+        izvor, odrediste i duljinu d te kopira prvih
+        d vrijednosti unutar memorije nakon izvora u
+        prvih d vrijednosti nakon odredista. */
+        do Output.println();
+        do Output.printString("do memcpy(A,B,2) ");
+        do Memory.memcpy(A,B,2);
+        do Output.println();
+
+        do Output.println();
+        do Output.printString("Array B:");      
+        do Output.println();
+
+        do Output.printInt(B[0]);
+        do Output.println();
+        do Output.printInt(B[1]);
+        do Output.println();
+        do Output.printInt(B[2]);
+        do Output.println();
+        do Output.printInt(B[3]);
+        do Output.println();
+
+
+        do A.dispose();
+        do B.dispose();
+
+        return;
+    }
+}
