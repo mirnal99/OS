@@ -1,0 +1,115 @@
+class Tetris
+{
+    field int x, y, s;
+    field int vx, vy;
+    field int currentRotation;
+    
+    constructor Tetris new()
+    {
+        let s = 16;
+        let x = 240;
+        let y = 112;
+        let vx = 0;
+        let vy = 0;
+        let currentRotation = 0;
+
+        do draw(this);
+
+        return this;
+    }
+
+    method void draw(bool color)
+    {
+        do Screen.setColor(color);
+        if(currentRotation = 0){
+            do Screen.drawRectangle(x, y, x + s, y + s + s + s);
+            do Screen.drawRectangle(x + s, y + s + s, x + s + s, y + s + s + s);
+        }
+        if(currentRotation = 1){
+            do Screen.drawRectangle(x, y, x + s, y + s + s);
+            do Screen.drawRectangle(x + s, y, x + s + s + s, y + s);
+        }
+        if(currentRotation = 2){
+            do Screen.drawRectangle(x + s + s, y, x + s + s + s, y + s + s + s);
+            do Screen.drawRectangle(x + s, y, x + s + s + s, y + s);
+        }
+        if(currentRotation = 3){
+            do Screen.drawRectangle(x + s + s, y + s, x + s + s + s, y + s + s + s);
+            do Screen.drawRectangle(x, y + s + s, x + s + s + s, y + s + s + s);
+        }
+        
+        return;
+    }
+    
+    // move() pomice tetromino po osi x ili osi y
+    method void move()
+    {
+        if (~(vx = 0))
+        {
+            if ((x + vx > 0) & (x + s + s + s + vx < 512))
+            {
+                do draw(false);
+                let x = x + vx;
+                do draw(true);
+            }
+        }
+        if (~(vy = 0))
+        {
+            if ((y + vy > 0) & (y + s + s + s + vy < 256))
+            {
+                do draw(false);
+                let y = y + vy;
+                do draw(true);
+            }
+        }
+        return;
+    }
+    
+    //run() radi beskonacnu petlju sve dok se ne pritisne odredjena tipka
+    method void run()
+	{
+		var char k;
+		let k = 0;
+		
+		while(~(k = 140)) // ESC => kraj programa
+		{
+			while (k = 0) // dok niti jedna tipka nije pritisnuta
+			{
+				let k = Keyboard.keyPressed();
+				do move();
+				do Sys.wait(5);
+			}
+			
+		if (k = 131) {let vy = -1; let vx = 0; let k = 0; } // strijelica prema gore
+		if (k = 133) {let vy = 1; let vx = 0; let k = 0; } // strijelica prema dolje
+		if (k = 130) {let vy = 0; let vx = -1; let k = 0; } // strijelica lijevo
+		if (k = 132) {let vy = 0; let vx = 1; let k = 0; } // strijelica desno 
+
+		if (k = 82){ //rotacija
+                if(~((currentRotation + 1) = 4)){
+                    do draw(false);
+                    let currentRotation = currentRotation + 1;
+                    let k = 0;
+                    do draw(true);
+                }
+                else{
+                    do draw(false);
+                    let currentRotation = 0;
+                    let k = 0;
+                    do draw(true);
+                    
+                }
+            }
+        
+        }
+
+		return;
+	}
+    
+    method void dispose()
+    {
+        do Memory.deAlloc(this);
+        return;
+    }
+    
+}

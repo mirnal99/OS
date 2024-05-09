@@ -1,0 +1,26 @@
+class Main
+{
+    function void main()
+    {
+        do Output.printString("abcdef");
+        do Output.printString("abcdef");
+        do Output.println();
+        do Output.printInt(1234);
+        do Output.println();
+        do Output.printInt(4321);
+        do Output.println();
+        do Output.moveCursor(0,0);
+        do Output.printString("pokusaj");
+        do Output.printString("prvi");
+        do Output.println();
+        do Output.printString("abecedaabecedalkjhgfdsa");
+        do Output.println();
+        do Output.printString("abecedqwertzuiopaabecedalkjhgfdsa");
+        do Output.println();
+        do Output.printString("mnbvcxxyabecedqwertzuiopaabecedalkjhgfdsa");
+        do Output.moveCursor(5,2);
+        do Output.printString("ABECEDAABECEDA");
+
+        return;
+    }
+}

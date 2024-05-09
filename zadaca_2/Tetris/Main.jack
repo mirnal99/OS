@@ -1,0 +1,11 @@
+class Main
+{
+    function void main()
+    {
+        var Tetris T;
+        let T = Tetris.new();
+        do T.run();
+        do T.dispose();
+        return;
+    }
+}
